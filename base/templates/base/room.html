@@ -1,0 +1,113 @@
+<title>Room</title>
+<style>
+  main {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+  }
+  .controls {
+    display: flex;
+    justify-content: space-around;
+  }
+  .info {
+    border-radius: 1rem;
+    height: 70vh;
+    padding: 1rem;
+    box-shadow: 0 0 6px gray;
+  }
+  .chat {
+    padding: 1rem;
+    display: grid;
+    grid-template-rows: 9fr 1fr;
+    grid-template-columns: 1fr;
+  }
+  .chat form {
+    display: flex;
+    justify-content: space-between;
+    border: solid gray 2px;
+    border-radius: 1rem;
+    width: 90%;
+    padding: 1rem;
+  }
+  .chat form button {
+    background: none;
+    border: none;
+  }
+
+  .chat form input {
+    outline: none;
+    border: none;
+    width: 90%;
+  }
+  .messages {
+    padding: 0.5rem;
+    overflow-y: scroll;
+  }
+  .msg {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+  }
+  .msg .user {
+    color: gray;
+  }
+  .msg .txt {
+    border-radius: 0.5rem;
+    color: white;
+    width: 50%;
+    padding: 3px;
+    background-color: rgb(56, 56, 56);
+  }
+  
+  .mine .txt{
+    background-color: #1e90ff;
+  }
+</style>
+{% include 'nav.html' %}
+
+<main>
+  <div class="info">
+    <h1>{{ room }}</h1>
+    <h2>@{{ room.host }}</h2>
+    <h3>{{ room.desc }}</h3>
+    {% if room.host == request.user %}
+    <div class="controls">
+      <a href="{% url 'update-room' room.id %}">Edit</a>
+      <a href="{% url 'delete-room' room.id %}">Delete</a>
+    </div>
+
+    {% endif%}
+  </div>
+  <div class="chat">
+    <div class="messages">
+      {% for msg in msgs%}
+      <div
+        {% if msg.user == request.user %}
+          class="msg mine"
+          style="align-items: flex-end;"
+        {% else %}
+          class="msg"
+        {% endif %} 
+      >
+        <span class="user">@{{msg.user}}</span>
+        <span class="txt">{{msg}}</span>
+      </div>
+      {% endfor %} {% for msg in messages%}
+      <div>
+        <span class="user">error</span>
+        <span class="txt">{{msg}}</span>
+      </div>
+      {% endfor %}
+    </div>
+    <form action="" method="post">
+      {% csrf_token %}
+      <!-- {{form}} -->
+      <input hidden type="text" name="room" value="{{room.id}}" />
+      <input hidden type="text" name="user" value="{{request.user.id}}" />
+      <input type="text" name="body" placeholder="Escriba aqui..." />
+      <button>send</button>
+    </form>
+  </div>
+  <div class="participants"></div>
+</main>
+
+{% include 'footer.html' %}

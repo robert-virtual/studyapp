@@ -1,0 +1,111 @@
+<title>Home</title>
+<style>
+  .card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 1rem;
+    box-shadow: 0 0 6px gray;
+  }
+  .card a {
+    color: black;
+    display: block;
+  }
+  .card .card-title {
+    font-size: 2rem;
+  }
+  .menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .menu a {
+    color: black;
+    text-decoration: none;
+  }
+  .menu a:hover {
+    color: black;
+    text-decoration: underline black;
+  }
+
+  .card > div {
+    width: calc(100% / 3);
+    /* border: red solid 2px; */
+    display: block;
+    margin: 0.5rem 0;
+  }
+  .card div:not(:first-child) * {
+    text-align: right;
+  }
+  main {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+  aside {
+    text-align: center;
+  }
+  .topic {
+    display: flex;
+  }
+  .topic * {
+    width: calc(100% / 2);
+  }
+  input[type="search"] {
+    padding: 0.5rem;
+    border: 2px gray solid;
+    outline-color: rgb(0, 140, 255);
+    border-radius: 0.5rem;
+  }
+</style>
+{% include 'nav.html' %}
+
+<main>
+  <div class="sidebar">
+    <h2>Browe Topics</h2>
+    <div class="topic">
+      <h3><a href="{% url 'home' %}">All</a></h3>
+      <span> {{rooms.count}} </span>
+    </div>
+    {% for topic in topics%}
+    <div class="topic">
+      <h3><a href="{% url 'home' %}?q={{topic.id}}">{{ topic.name }}</a></h3>
+      <span>#{{ topic.room }}</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="rooms">
+    <div class="menu">
+      <h2>{{ rooms.count }} Rooms available</h2>
+      <h3>
+        <a href="{% url 'create-room' %}">Create Room</a>
+      </h3>
+    </div>
+    <form action="" method="get">
+      <input name="name" type="search" placeholder="search" />
+    </form>
+    {% for room in rooms%}
+    <div class="card">
+      <div class="content">
+        <span>@{{ room.host.username }}</span>
+        <!-- <a href="room/{{room.id}}">{{ room.name }}</a> -->
+        <a class="card-title" href="{% url 'room' room.id %}"
+          >{{ room.name }}</a
+        >
+        <span>{{room.topic.name}}</span>
+      </div>
+      <div>
+        <p>{{ room.created }}</p>
+      </div>
+    </div>
+
+    {% endfor %}
+  </div>
+  <aside>
+    <h2>este es el aside</h2>
+  </aside>
+</main>
+
+{% include 'footer.html' %}

@@ -1,0 +1,44 @@
+<style>
+  form {
+    margin: auto;
+    width: max-content;
+    padding: 2rem;
+  }
+  form * {
+    margin: 1rem;
+    display: block;
+  }
+  .error {
+    color: red;
+  }
+</style>
+{% include 'nav.html' %}
+
+<main>
+ 
+  <form {% if page == "Register" %} action="/register/" {% endif %} method="post">
+    <h2>{{page}}</h2>
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages%}
+      <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        {{ message }}
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% csrf_token %} {% if page == 'Signin' %}
+    <label for="username">Username:</label>
+    <input type="text" name="username" placeholder="username" />
+
+    <label for="password">Password:</label>
+    <input type="password" name="password" placeholder="password" />
+    <input type="submit" value="{{page}}" />
+    <a href="{% url 'register' %}?page='Register'">Register</a>
+    {% else %} {{ form }}
+    <input type="submit" value="{{page}}" />
+    <a href="{% url 'signin' %}?page='Signin'">Signin</a>
+    {% endif %}
+    
+  </form>
+</main>
