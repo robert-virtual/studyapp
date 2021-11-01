@@ -4,24 +4,24 @@
 
 ### Login
 
-![Login](./Screenshots/login.png)
+![Login](screenshots/login.png)
 
 ### Register
 
-![register](./Screenshots/register.png)
+![register](./screenshots/register.png)
 
 ### Home
 
-![Home](./Screenshots/img1.png)
+![Home](screenshots/img1.png)
 
 ### Create room
 
-![Create room](./Screenshots/img2.png)
+![Create room](./screenshots/img2.png)
 
 ### Room
 
-![Room](./Screenshots/img3.png)
+![Room](./screenshots/img3.png)
 
 ### logout Room
 
-![logout room](./Screenshots/img4.png)
+![logout room](./screenshots/img4.png)
