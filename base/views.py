@@ -120,8 +120,10 @@ def deleteRoom(req,id):
 
 def room(req,id):
     # form = MessageForm()
+    
     room = Room.objects.get(id = id)
-    msgs = Message.objects.filter(room__id=id)
+    # msgs = Message.objects.filter(room__id=id)
+    msgs = room.message_set.all()
     if req.method == 'POST':
         if req.user.is_authenticated:
             form = MessageForm(req.POST)

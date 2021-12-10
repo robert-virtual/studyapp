@@ -39,6 +39,7 @@
     width: 90%;
   }
   .messages {
+    height: 60vh;
     padding: 0.5rem;
     overflow-y: scroll;
   }
@@ -47,13 +48,15 @@
     flex-direction: column;
     margin-bottom: 0.5rem;
   }
-  .msg .user {
+  .msg .user,.msg small {
     color: gray;
   }
   .msg .txt {
+    max-width: 50%;
+    min-width: 25%;
+    /* width: max-content; */
     border-radius: 0.5rem;
     color: white;
-    width: 50%;
     padding: 3px;
     background-color: rgb(56, 56, 56);
   }
@@ -90,6 +93,7 @@
       >
         <span class="user">@{{msg.user}}</span>
         <span class="txt">{{msg}}</span>
+        <small>{{msg.created.time}}</small>
       </div>
       {% endfor %} {% for msg in messages%}
       <div>
